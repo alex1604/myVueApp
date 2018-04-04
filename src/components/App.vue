@@ -7,7 +7,7 @@
         alt="vue"
         class="logo"
       />
-      <h1>Welcome to Vue.js</h1>
+      <h1>Welcome to Shit.js {{color}}</h1>
     </div>
     <div class="bottom">
       To get started, edit <code>./src/components/App.vue</code> and save to reload.<br/>
@@ -20,7 +20,17 @@
 
 <script>
   export default {
-    name: 'app'
+    name: 'app',
+    data: function() {
+      return {
+        color: 'magic',
+        another: true,
+        user: {
+          name: '',
+          email: ''
+        }
+      }
+    }
   }
 </script>
 
