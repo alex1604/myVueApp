@@ -1,37 +1,105 @@
 <template>
   <div id="app">
     <div class="banner">
-      <img
-        src="https://vuejs.org/images/logo.png"
-        width="100"
-        alt="vue"
-        class="logo"
-      />
-      <h1>Welcome to Shit.js {{color}}</h1>
+      <img src="https://vuejs.org/images/logo.png" width="100" alt="vue" class="logo" />
+      <h1 v-bind:class="{'hide' : hide}">Welcome to Shit.js {{color}}</h1>
+      <button type="button" v-on:click="hideContent"> Hide content above! </button>
+      <form id="form">
+        <button id="button" type="submit" v-bind:disabled="enabled">SUBMIT</button>
+        <input type="checkbox" v-model="checkSelected" v-on:change="enabled1">
+        <div>The checkbox is checked {{checkSelected}}</div>
+      </form>
     </div>
     <div class="bottom">
-      To get started, edit <code>./src/components/App.vue</code> and save to reload.<br/>
+      To get started, edit
+      <code>./src/components/App.vue</code> and save to reload.
+      <br/>
       <span class="fade">
-        Checkout <code>./README.md</code> for more usages.
+        Checkout
+        <code>./README.md</code> for more usages.
       </span>
+      <form>
+        <label for="#name">Your Name:
+          <input type="text" v-model="userName">
+        </label>
+        <label for="#surname">Your Surname:
+          <input type="text" v-model="userSurname">
+        </label>
+        <label for="#email">Your Email:
+          <input type="text" v-model="userEmail">
+        </label>
+        <button type="button" v-on:click="insertUser">Send formulaire</button>
+
+        <label for="#name" style="margin-top:30px">Favorite color:
+            <input type="text" v-model="favoriteColor">
+          </label>
+          <button type="button" v-on:click="insertColor">Send color</button>
+
+        <div style="margin-top:30px">My user details are: {{user}}</div>
+        <div style="margin-top:30px">My favorite colors are: {{favoriteColors}}</div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
+
+  var userId = 0;
+
   export default {
     name: 'app',
-    data: function() {
+    data: function () {
       return {
         color: 'magic',
         another: true,
         user: {
-          name: '',
-          email: ''
+            name:'',
+            surname:'',
+            email:'' 
+        },
+        enabled: true,
+        checkSelected: false,
+        hide: false,
+        userName: '',
+        userSurname: '',
+        userEmail: '',
+        favoriteColor: '',
+        favoriteColors: []
+      }
+    },
+    methods: {
+      insertColor: function () {
+        this.favoriteColors.push(this.favoriteColor);
+      },
+      enabled1: function () {
+        if (this.checkSelected) {
+          this.enabled = false;
+        } else {
+          this.enabled = true;
         }
+      },
+      hideContent: function () {
+        if (!this.hide) {
+          this.hide = true
+        } else {
+          this.hide = false
+        }
+      },
+      insertUser: function () {
+        this.user.name = this.userName;
+        this.user.surname = this.userSurname;
+        this.user.email = this.userEmail;
+        
+        /*this.user = {
+          'name': this.userName,
+          'surname': this.userSurname,
+          'email': this.userEmail
+        }*/
       }
     }
   }
+
+
 </script>
 
 <!-- CSS libraries -->
@@ -46,8 +114,13 @@
     color: #2c3e50;
   }
 
-  code::before, code::after {
+  code::before,
+  code::after {
     content: '`';
+  }
+
+  .hide {
+    display: none;
   }
 </style>
 
@@ -85,7 +158,11 @@
   }
 
   @keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>
